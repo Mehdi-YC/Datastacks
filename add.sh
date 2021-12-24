@@ -1,0 +1,1 @@
+git add ./*/docker-compose.yaml ./*/.gitkeep ./*/readme.md ./readme.md add.sh 

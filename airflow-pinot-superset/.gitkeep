@@ -1,0 +1,7 @@
+# keeping only the docker-compose and the .gitkeep readme.md
+# Filter everything...
+*
+# except : 
+!.gitkeep
+!docker-compose.yaml
+!reame.md
