@@ -73,7 +73,7 @@ services:
   clickhouse:
     image: yandex/clickhouse-server:latest
     volumes:
-      - ./clickhouse/config.xml:/etc/clickhouse-server/config.xml
+      - ./clickhouse/:/etc/clickhouse-server/
     expose:
       - 8123
       - 9000
