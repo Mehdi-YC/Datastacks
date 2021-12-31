@@ -56,7 +56,7 @@ x-airflow-common:
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
     AIRFLOW__API__AUTH_BACKEND: 'airflow.api.auth.backend.basic_auth'
-    #_PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-}
+    _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:- apache-airflow-providers-microsoft-mssql airflow-clickhouse-plugin[pandas]}
   volumes:
     - ./dags:/opt/airflow/dags
     - ./logs:/opt/airflow/logs
@@ -72,18 +72,16 @@ x-airflow-common:
 services:
   clickhouse:
     image: yandex/clickhouse-server:latest
-    volumes:
-      - ./clickhouse/:/etc/clickhouse-server/
-    expose:
-      - 8123
-      - 9000
+    ports:
+      - 8123:8123
+      - 9000:9000
 
   superset:
     image: apache/superset:latest
     ports:
       - 8088:8088
     command: > 
-              sh -c "superset fab create-admin --username admin --firstname Superset --lastname Admin --email admin@superset.com --password admin
+              sh -c "superset fab create-admin --username airflow --firstname Superset --lastname Admin --email admin@superset.com --password airflow
               && superset db upgrade
               && superset init
               && pip install clickhouse-driver==0.2.0 
